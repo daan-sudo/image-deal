@@ -2,6 +2,58 @@
 
 > 一个面向设计团队和内容团队的桌面端图片工作台，帮助用户高效完成大批量图片的浏览、比较、筛选、整理与决策。
 
+## 快速开始
+
+### 环境要求
+
+| 工具 | 版本要求 |
+|------|---------|
+| **Node.js** | >= 18 |
+| **pnpm** | >= 8 |
+
+### 安装依赖
+
+```bash
+pnpm install
+```
+
+### 开发模式启动
+
+```bash
+pnpm dev
+```
+
+启动后会自动打开 Electron 窗口，支持热更新。
+
+### 生产构建 & 打包
+
+```bash
+# 仅构建（类型检查 + 编译）
+pnpm build
+
+# 构建并打包为可分发安装包
+pnpm build:mac     # macOS (.dmg)
+pnpm build:win     # Windows (.exe)
+pnpm build:linux   # Linux (.AppImage)
+
+# 构建但不打包安装包（仅生成解压目录，用于调试）
+pnpm build:unpack
+```
+
+### 预览构建产物
+
+```bash
+pnpm start
+```
+
+### 代码质量
+
+```bash
+pnpm lint          # ESLint 检查
+pnpm format        # Prettier 格式化
+pnpm typecheck     # TypeScript 类型检查
+```
+
 ---
 
 ## 一、产品定位
