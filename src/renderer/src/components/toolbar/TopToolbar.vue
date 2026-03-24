@@ -35,6 +35,15 @@ function enterCompare(): void {
     alert('请至少选择 2 张图片进行对比')
   }
 }
+
+async function handleDelete(): Promise<void> {
+  const selected = [...uiStore.selectedImageIds]
+  if (selected.length === 0) return
+  const confirmed = confirm(`确定要删除选中的 ${selected.length} 张图片吗？\n（仅从列表中移除，不会删除原始文件）`)
+  if (!confirmed) return
+  await imageStore.removeImages(selected)
+  uiStore.clearSelection()
+}
 </script>
 
 <template>
@@ -131,6 +140,17 @@ function enterCompare(): void {
       <span v-if="uiStore.selectedImageIds.size > 0" class="selection-info">
         已选 {{ uiStore.selectedImageIds.size }} 张
       </span>
+
+      <!-- 删除 -->
+      <button
+        v-if="uiStore.selectedImageIds.size > 0"
+        class="toolbar-btn danger"
+        @click="handleDelete"
+        title="删除选中图片 (Delete)"
+      >
+        <span class="btn-icon">🗑️</span>
+        <span>删除</span>
+      </button>
 
       <!-- 导出 -->
       <button class="toolbar-btn" @click="handleExport" title="导出通过的图片">
@@ -244,6 +264,15 @@ function enterCompare(): void {
 
 .toolbar-btn.primary:hover {
   background: var(--accent-primary-hover);
+}
+
+.toolbar-btn.danger {
+  color: #ff5252;
+}
+
+.toolbar-btn.danger:hover {
+  background: rgba(255, 82, 82, 0.12);
+  color: #ff5252;
 }
 
 .icon-btn {

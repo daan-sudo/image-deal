@@ -96,8 +96,13 @@ export function useKeyboard(): void {
           e.preventDefault()
           const selected = [...uiStore.selectedImageIds]
           if (selected.length > 0) {
-            imageStore.removeImages(selected)
-            uiStore.clearSelection()
+            const confirmed = confirm(
+              `确定要删除选中的 ${selected.length} 张图片吗？\n（仅从列表中移除，不会删除原始文件）`
+            )
+            if (confirmed) {
+              imageStore.removeImages(selected)
+              uiStore.clearSelection()
+            }
           }
         }
         break

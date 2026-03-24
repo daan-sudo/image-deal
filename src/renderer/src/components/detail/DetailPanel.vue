@@ -64,6 +64,15 @@ function updateNote(e: Event): void {
     }
   }, 500)
 }
+
+async function handleDeleteCurrent(): Promise<void> {
+  if (!image.value) return
+  const confirmed = confirm(`确定要删除「${image.value.fileName}」吗？\n（仅从列表中移除，不会删除原始文件）`)
+  if (!confirmed) return
+  const id = image.value.id
+  uiStore.clearSelection()
+  await imageStore.removeImages([id])
+}
 </script>
 
 <template>
@@ -189,6 +198,13 @@ function updateNote(e: Event): void {
         rows="3"
         @input="updateNote"
       ></textarea>
+    </div>
+
+    <!-- 删除按钮 -->
+    <div class="detail-section delete-section">
+      <button class="delete-btn" @click="handleDeleteCurrent" title="删除此图片">
+        🗑️ 删除此图片
+      </button>
     </div>
   </aside>
 </template>
@@ -368,5 +384,26 @@ function updateNote(e: Event): void {
 
 .note-input::placeholder {
   color: var(--text-muted);
+}
+
+.delete-section {
+  border-bottom: none;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.delete-btn:hover {
+  background: rgba(255, 82, 82, 0.1);
+  border-color: #ff5252;
 }
 </style>
